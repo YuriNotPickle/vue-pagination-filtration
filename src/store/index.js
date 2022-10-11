@@ -15,97 +15,12 @@ export default new Vuex.Store({
       },
     },
     columns: ["Date", "Name", "Quanity", "Distance"],
-    serverTable: [
-      {
-        date: "07.06.2001",
-        name: "lorem",
-        quanity: "10",
-        distance: "25 km",
-      },
-      {
-        date: "03.02.2021",
-        name: "ipsum",
-        quanity: "150",
-        distance: "2 km",
-      },
-      {
-        date: "03.02.2002",
-        name: "dolor",
-        quanity: "30",
-        distance: "20 km",
-      },
-      {
-        date: "07.06.2001",
-        name: "emst",
-        quanity: "1",
-        distance: "25 km",
-      },
-      {
-        date: "13.05.2008",
-        name: "quiet",
-        quanity: "56",
-        distance: "53 km",
-      },
-      {
-        date: "02.05.2021",
-        name: "consectetur",
-        quanity: "1",
-        distance: "35 km",
-      },
-      {
-        date: "22.11.2020",
-        name: "ultricies ",
-        quanity: "15",
-        distance: "235 km",
-      },
-
-      {
-        date: "07.06.2001",
-        name: "lorem",
-        quanity: "10",
-        distance: "25 km",
-      },
-      {
-        date: "03.02.2021",
-        name: "ipsum",
-        quanity: "150",
-        distance: "2 km",
-      },
-      {
-        date: "03.02.2002",
-        name: "dolor",
-        quanity: "30",
-        distance: "20 km",
-      },
-      {
-        date: "07.06.2001",
-        name: "emst",
-        quanity: "1",
-        distance: "25 km",
-      },
-      {
-        date: "13.05.2008",
-        name: "quiet",
-        quanity: "56",
-        distance: "53 km",
-      },
-      {
-        date: "02.05.2021",
-        name: "consectetur",
-        quanity: "1",
-        distance: "35 km",
-      },
-      {
-        date: "22.11.2020",
-        name: "ultricies ",
-        quanity: "15",
-        distance: "235 km",
-      },
-    ],
+    serverTable: [],
     pagination: {
       rowsPerPage: 5,
       currentPage: 1,
     },
+    dataLoaded: false,
   },
   getters: {
     serchIn(state) {
@@ -210,6 +125,12 @@ export default new Vuex.Store({
     setPage(state, value) {
       state.pagination.currentPage = value;
     },
+    setTable(state, value) {
+      state.serverTable = value;
+    },
+    dataLoaded(state) {
+      state.dataLoaded = true;
+    },
   },
   actions: {
     setFilteringCol({ commit }, value) {
@@ -217,6 +138,14 @@ export default new Vuex.Store({
     },
     setPage({ commit }, value) {
       commit("setPage", value);
+    },
+    async GET_TABLE_FROM_API({ commit }) {
+      const response = await fetch(
+        "https://my-json-server.typicode.com/YuriNotPickle/vue-pagination-filtration/tableData"
+      );
+      const data = await response.json();
+      commit("setTable", data);
+      commit("dataLoaded");
     },
   },
   strict: process.env.NODE_ENV !== "production",

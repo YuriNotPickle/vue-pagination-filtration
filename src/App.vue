@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-if="$store.state.dataLoaded">
     <img alt="Vue logo" src="./assets/logo.png" />
     <app-table />
   </div>
@@ -7,11 +7,17 @@
 
 <script>
 import AppTable from "./components/AppTable.vue";
-
+import { mapActions } from "vuex";
 export default {
   name: "App",
   components: {
     AppTable,
+  },
+  methods: {
+    ...mapActions(["GET_TABLE_FROM_API"]),
+  },
+  mounted() {
+    this.GET_TABLE_FROM_API();
   },
 };
 </script>
