@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form @submit.prevent>
     <div class="form-row">
       <div class="form-group col-md-3">
         <label for="search-in">Search in</label>
@@ -58,8 +58,9 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["setFilteringCol"]),
+    ...mapActions(["setFilteringCol", "setPage"]),
     updateFilterMethod(e) {
+      this.setPage(1);
       this.setFilteringCol({ type: e.target.id, data: e.target.value });
     },
   },
