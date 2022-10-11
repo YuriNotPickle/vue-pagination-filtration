@@ -10,26 +10,28 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(row, index) in filter" :key="index">
+        <tr v-for="(row, index) in paginatedRow" :key="index">
           <th scope="row" v-for="(string, index) in row" :key="index">
             {{ string }}
           </th>
         </tr>
       </tbody>
     </table>
-    {{ filter }}
+    <app-pagination />
   </div>
 </template>
 <script>
 import { mapState, mapGetters } from "vuex";
 import AppFilters from "./AppFilters.vue";
+import AppPagination from "./AppPagination.vue";
 export default {
   components: {
     AppFilters,
+    AppPagination,
   },
   computed: {
     ...mapState(["filteredTable", "columns"]),
-    ...mapGetters(["filter"]),
+    ...mapGetters(["paginatedRow"]),
   },
 };
 </script>
